@@ -2,4 +2,6 @@
     <string name="app_name">Streamer</string>
 
     <string name="content_description_headphones">Headphones background</string>
+    <string name="title_activity_search">Search for your artist</string>
+
 </resources>
