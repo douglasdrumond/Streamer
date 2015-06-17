@@ -3,6 +3,8 @@ package ninja.roboto.streamer.activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,12 +19,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import ninja.roboto.streamer.R;
+import ninja.roboto.streamer.adapters.SpotifyAdapter;
 
 public class SearchActivity extends AppCompatActivity {
 
     private static final int TEXT_LENGTH_THRESHOLD = 3;
     private static final long DELAY_IN_MILLIS = 1000;
     private Timer mTimerToSend = new Timer();
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,18 @@ public class SearchActivity extends AppCompatActivity {
 
         configureToolbar();
         configureEditText();
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_result);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
+
+        mLayoutManager = new GridLayoutManager(this, 2);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter = new SpotifyAdapter();
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void configureEditText() {
