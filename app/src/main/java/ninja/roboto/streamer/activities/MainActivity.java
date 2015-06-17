@@ -1,7 +1,9 @@
-package ninja.roboto.streamer;
+package ninja.roboto.streamer.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import ninja.roboto.streamer.R;
 
 public class MainActivity extends AppCompatActivity {
 
