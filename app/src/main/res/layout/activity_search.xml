@@ -4,5 +4,20 @@
                 android:layout_height="match_parent"
                 tools:context="ninja.roboto.streamer.activities.SearchActivity">
 
-    <include layout="@layout/toolbar" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize">
+
+        <EditText
+            android:id="@+id/edittext_search_query"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionSearch"
+            android:inputType="text" />
+    </android.support.v7.widget.Toolbar>
+
 </RelativeLayout>
