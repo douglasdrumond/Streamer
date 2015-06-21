@@ -14,14 +14,13 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import ninja.roboto.streamer.R;
+import ninja.roboto.streamer.model.SpotifyArtist;
 
 public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHolder> {
 
-    private static final int ARTIST_NAME_INDEX = 0;
-    private static final int ALBUM_ART_URL_INDEX = 1;
     private final Context mContext;
 
-    private ArrayList<String[]> mArtists; // each item: [0] artist name, [1] album art URL
+    private ArrayList<SpotifyArtist> mArtists;
 
     public SpotifyAdapter(Context context) {
         mContext = context;
@@ -36,8 +35,8 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        viewHolder.mArtistName.setText(mArtists.get(position)[ARTIST_NAME_INDEX]);
-        String albumArtUrl = mArtists.get(position)[ALBUM_ART_URL_INDEX];
+        viewHolder.mArtistName.setText(mArtists.get(position).getName());
+        String albumArtUrl = mArtists.get(position).getAlbumArtUrl();
         if (!TextUtils.isEmpty(albumArtUrl)) {
             Glide.with(mContext)
                     .load(albumArtUrl)
@@ -52,7 +51,7 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
         return mArtists != null ? mArtists.size() : 0;
     }
 
-    public void setArtists(ArrayList<String[]> artists) {
+    public void setArtists(ArrayList<SpotifyArtist> artists) {
         mArtists = artists;
         notifyDataSetChanged();
     }

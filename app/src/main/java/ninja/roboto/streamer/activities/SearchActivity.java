@@ -27,6 +27,7 @@ import kaaes.spotify.webapi.android.models.ArtistsPager;
 import kaaes.spotify.webapi.android.models.Image;
 import ninja.roboto.streamer.R;
 import ninja.roboto.streamer.adapters.SpotifyAdapter;
+import ninja.roboto.streamer.model.SpotifyArtist;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -43,7 +44,7 @@ public class SearchActivity extends AppCompatActivity {
     private SpotifyAdapter mAdapter;
 
     // List of artists found
-    private ArrayList<String[]> mArtists;
+    private ArrayList<SpotifyArtist> mArtists;
 
     private EditText mSearchQuery;
 
@@ -68,7 +69,7 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
         if (savedInstanceState != null) {
-            mArtists = (ArrayList<String[]>) savedInstanceState.getSerializable(ARTISTS_SAVE_KEY);
+            mArtists = savedInstanceState.getParcelableArrayList(ARTISTS_SAVE_KEY);
             mAdapter.setArtists(mArtists);
         }
     }
@@ -76,7 +77,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (mArtists != null) {
-            outState.putSerializable(ARTISTS_SAVE_KEY, mArtists);
+            outState.putParcelableArrayList(ARTISTS_SAVE_KEY, mArtists);
         }
         super.onSaveInstanceState(outState);
     }
@@ -146,7 +147,7 @@ public class SearchActivity extends AppCompatActivity {
         );
     }
 
-    private void searchArtist(String artistQueryString) {
+    private void searchArtist(final String artistQueryString) {
 
         mArtists = new ArrayList<>();
 
@@ -158,13 +159,14 @@ public class SearchActivity extends AppCompatActivity {
 
                 int size = artistsPager.artists.items.size();
                 for (int i = 0; i < size; i++) {
-                    String[] current = new String[2];
                     Artist artist = artistsPager.artists.items.get(i);
-                    current[0] = artist.name;
+                    String albumArtUrl = null;
                     if (artist.images != null && artist.images.size() > 0) {
                         Image albumArt = artist.images.get(0);
-                        current[1] = albumArt.url;
+                        albumArtUrl = albumArt.url;
                     }
+
+                    SpotifyArtist current = new SpotifyArtist(artist.name, albumArtUrl);
                     mArtists.add(current);
                 }
 
