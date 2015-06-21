@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import ninja.roboto.streamer.R;
-import ninja.roboto.streamer.activities.SearchActivity;
 
 public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHolder> {
 
