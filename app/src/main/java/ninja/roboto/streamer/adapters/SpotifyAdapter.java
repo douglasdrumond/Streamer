@@ -35,9 +35,9 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
         View view = inflater.inflate(R.layout.artist_item, viewGroup, false);
         return new ViewHolder(view, new ViewHolder.ViewHolderClickListener() {
             @Override
-            public void onArtistClick(String artistName) {
+            public void onArtistClick(int position) {
                 // TODO: 21/06/15 start activity for this artist
-                Log.d(LOG_TAG, "onArtistClick " + artistName);
+                Log.d(LOG_TAG, "onArtistClick " + mArtists.get(position).getName());
             }
         });
     }
@@ -80,11 +80,11 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
 
         @Override
         public void onClick(View v) {
-            mListener.onArtistClick(mArtistName.getText().toString());
+            mListener.onArtistClick(getAdapterPosition());
         }
 
         public interface ViewHolderClickListener {
-            void onArtistClick(String artistName);
+            void onArtistClick(int adapterPosition);
         }
     }
 }
