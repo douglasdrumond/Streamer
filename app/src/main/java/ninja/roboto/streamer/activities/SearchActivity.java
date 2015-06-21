@@ -147,6 +147,7 @@ public class SearchActivity extends AppCompatActivity {
         );
     }
 
+    // TODO: 21/06/15 move to a Service, now it has a potentially long call tied to an Activity
     private void searchArtist(final String artistQueryString) {
 
         mArtists = new ArrayList<>();
