@@ -3,5 +3,8 @@
 
     <string name="content_description_headphones">Headphones background</string>
     <string name="title_activity_search">Search for your artist</string>
+    <string name="artist_lookup_error">Couldn\'t search for artist</string>
+    <string name="content_description_album_art">Album art</string>
+    <string name="could_not_find_artist">Could not find any artist</string>
 
 </resources>

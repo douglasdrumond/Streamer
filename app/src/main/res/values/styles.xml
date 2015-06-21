@@ -5,6 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:editTextStyle">@style/EditText</item>
+        <item name="android:textViewStyle">@style/TextView</item>
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="colorPrimary">@color/purple</item>
         <item name="colorPrimaryDark">@color/dark_purple</item>
@@ -15,6 +16,11 @@
     <style name="EditText" parent="Widget.AppCompat.EditText">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textColorHint">@color/super_dark_purple</item>
+        <item name="android:textSize">@dimen/font_normal</item>
+    </style>
+
+    <style name="TextView" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/font_normal</item>
     </style>
 

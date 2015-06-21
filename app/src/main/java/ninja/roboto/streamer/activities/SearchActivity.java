@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -15,20 +16,31 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import kaaes.spotify.webapi.android.SpotifyApi;
+import kaaes.spotify.webapi.android.SpotifyService;
+import kaaes.spotify.webapi.android.models.Artist;
+import kaaes.spotify.webapi.android.models.ArtistsPager;
+import kaaes.spotify.webapi.android.models.Image;
 import ninja.roboto.streamer.R;
 import ninja.roboto.streamer.adapters.SpotifyAdapter;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class SearchActivity extends AppCompatActivity {
+    private static final String LOG_TAG = SearchActivity.class.getSimpleName();
 
     private static final int TEXT_LENGTH_THRESHOLD = 3;
     private static final long DELAY_IN_MILLIS = 1000;
+
     private Timer mTimerToSend = new Timer();
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private SpotifyAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
@@ -72,7 +84,9 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void afterTextChanged(final Editable s) {
 
-                        // TODO: only do this on wifi, if mobile network, prefer waiting for ime_action_search
+                        // TODO: only do this search on-the-fly on wifi
+                        // if on mobile network, prefer waiting for ime_action_search
+
                         // is it big enough to start a search?
                         if (s.length() >= TEXT_LENGTH_THRESHOLD) {
 
@@ -83,8 +97,7 @@ public class SearchActivity extends AppCompatActivity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            // TODO: 6/17/15 search
-                                            Toast.makeText(SearchActivity.this, "Gonna search " + s.toString(), Toast.LENGTH_SHORT).show();
+                                            searchArtist(s.toString());
                                         }
                                     });
 
@@ -106,8 +119,7 @@ public class SearchActivity extends AppCompatActivity {
                                     = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(searchQuery.getWindowToken(), 0);
 
-                            // TODO: 6/17/15 search
-                            Toast.makeText(SearchActivity.this, "Gonna search " + v.getText().toString(), Toast.LENGTH_SHORT).show();
+                            searchArtist(v.getText().toString());
                             return true;
                         }
 
@@ -115,6 +127,44 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private void searchArtist(String artistQueryString) {
+
+        // List of artists found
+        final ArrayList<String[]> artists = new ArrayList<>();
+
+        SpotifyApi spotifyApi = new SpotifyApi();
+        SpotifyService spotifyService = spotifyApi.getService();
+        spotifyService.searchArtists(artistQueryString, new Callback<ArtistsPager>() {
+            @Override
+            public void success(ArtistsPager artistsPager, Response response) {
+
+                int size = artistsPager.artists.items.size();
+                for (int i = 0; i < size; i++) {
+                    String[] current = new String[2];
+                    Artist artist = artistsPager.artists.items.get(i);
+                    current[0] = artist.name;
+                    if (artist.images != null && artist.images.size() > 0) {
+                        Image albumArt = artist.images.get(0);
+                        current[1] = albumArt.url;
+                    }
+                    artists.add(current);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(LOG_TAG, "failure " + error.getMessage());
+                Toast.makeText(SearchActivity.this, R.string.artist_lookup_error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        if (!artists.isEmpty()) {
+            mAdapter.setArtists(artists);
+        } else {
+            Toast.makeText(SearchActivity.this, R.string.could_not_find_artist, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void configureToolbar() {
