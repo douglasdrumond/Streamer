@@ -24,7 +24,7 @@ import ninja.roboto.streamer.adapters.SpotifyAdapter;
 public class SearchActivity extends AppCompatActivity {
 
     private static final int TEXT_LENGTH_THRESHOLD = 3;
-    private static final long DELAY_IN_MILLIS = 1000;
+    private static final long DELAY_IN_MILLIS = 300;
     private Timer mTimerToSend = new Timer();
 
     private RecyclerView mRecyclerView;
