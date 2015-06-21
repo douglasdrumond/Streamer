@@ -39,9 +39,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private Timer mTimerToSend = new Timer();
 
-    private RecyclerView mRecyclerView;
     private SpotifyAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,17 +49,17 @@ public class SearchActivity extends AppCompatActivity {
         configureToolbar();
         configureEditText();
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_result);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview_result);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
 
-        mLayoutManager = new GridLayoutManager(this, 2);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new SpotifyAdapter();
-        mRecyclerView.setAdapter(mAdapter);
+        mAdapter = new SpotifyAdapter(this);
+        recyclerView.setAdapter(mAdapter);
     }
 
     private void configureEditText() {
@@ -151,6 +149,17 @@ public class SearchActivity extends AppCompatActivity {
                     }
                     artists.add(current);
                 }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!artists.isEmpty()) {
+                            mAdapter.setArtists(artists);
+                        } else {
+                            Toast.makeText(SearchActivity.this, R.string.could_not_find_artist, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
 
             @Override
@@ -160,11 +169,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        if (!artists.isEmpty()) {
-            mAdapter.setArtists(artists);
-        } else {
-            Toast.makeText(SearchActivity.this, R.string.could_not_find_artist, Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void configureToolbar() {

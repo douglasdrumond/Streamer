@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="ninja.roboto.streamer"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    package="ninja.roboto.streamer"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -23,6 +24,10 @@
             android:label="@string/title_activity_search"
             android:parentActivityName=".activities.MainActivity">
         </activity>
+
+        <meta-data
+            android:name="ninja.roboto.streamer.GlideConfiguration"
+            android:value="GlideModule" />
     </application>
 
 </manifest>
