@@ -6,12 +6,18 @@ import android.support.annotation.NonNull;
 
 public class SpotifyArtist implements Parcelable {
 
+    private String mId;
     private String mName;
     private String mAlbumArtUrl;
 
-    public SpotifyArtist(String name, String albumArtUrl) {
+    public SpotifyArtist(String id, String name, String albumArtUrl) {
+        mId = id;
         mName = name;
         mAlbumArtUrl = albumArtUrl;
+    }
+
+    public String getId() {
+        return mId;
     }
 
     public String getName() {

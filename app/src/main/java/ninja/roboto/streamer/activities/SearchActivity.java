@@ -167,7 +167,7 @@ public class SearchActivity extends AppCompatActivity {
                         albumArtUrl = albumArt.url;
                     }
 
-                    SpotifyArtist current = new SpotifyArtist(artist.name, albumArtUrl);
+                    SpotifyArtist current = new SpotifyArtist(artist.id, artist.name, albumArtUrl);
                     mArtists.add(current);
                 }
 
