@@ -36,10 +36,16 @@ public class SearchActivity extends AppCompatActivity {
 
     private static final int TEXT_LENGTH_THRESHOLD = 3;
     private static final long DELAY_IN_MILLIS = 1000;
+    private static final String ARTISTS_SAVE_KEY = "ARTISTS_SAVE_KEY";
 
     private Timer mTimerToSend = new Timer();
 
     private SpotifyAdapter mAdapter;
+
+    // List of artists found
+    private ArrayList<String[]> mArtists;
+
+    private EditText mSearchQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +66,24 @@ public class SearchActivity extends AppCompatActivity {
 
         mAdapter = new SpotifyAdapter(this);
         recyclerView.setAdapter(mAdapter);
+
+        if (savedInstanceState != null) {
+            mArtists = (ArrayList<String[]>) savedInstanceState.getSerializable(ARTISTS_SAVE_KEY);
+            mAdapter.setArtists(mArtists);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (mArtists != null) {
+            outState.putSerializable(ARTISTS_SAVE_KEY, mArtists);
+        }
+        super.onSaveInstanceState(outState);
     }
 
     private void configureEditText() {
-        final EditText searchQuery = (EditText) findViewById(R.id.edittext_search_query);
-        searchQuery.addTextChangedListener(
+        mSearchQuery = (EditText) findViewById(R.id.edittext_search_query);
+        mSearchQuery.addTextChangedListener(
                 new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -106,7 +125,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 });
 
-        searchQuery.setOnEditorActionListener(
+        mSearchQuery.setOnEditorActionListener(
                 new TextView.OnEditorActionListener() {
                     @Override
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -115,7 +134,7 @@ public class SearchActivity extends AppCompatActivity {
                             // Hide the keyboard
                             InputMethodManager imm
                                     = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow(searchQuery.getWindowToken(), 0);
+                            imm.hideSoftInputFromWindow(mSearchQuery.getWindowToken(), 0);
 
                             searchArtist(v.getText().toString());
                             return true;
@@ -129,8 +148,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void searchArtist(String artistQueryString) {
 
-        // List of artists found
-        final ArrayList<String[]> artists = new ArrayList<>();
+        mArtists = new ArrayList<>();
 
         SpotifyApi spotifyApi = new SpotifyApi();
         SpotifyService spotifyService = spotifyApi.getService();
@@ -147,14 +165,14 @@ public class SearchActivity extends AppCompatActivity {
                         Image albumArt = artist.images.get(0);
                         current[1] = albumArt.url;
                     }
-                    artists.add(current);
+                    mArtists.add(current);
                 }
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (!artists.isEmpty()) {
-                            mAdapter.setArtists(artists);
+                        if (!mArtists.isEmpty()) {
+                            mAdapter.setArtists(mArtists);
                         } else {
                             Toast.makeText(SearchActivity.this, R.string.could_not_find_artist, Toast.LENGTH_SHORT).show();
                         }

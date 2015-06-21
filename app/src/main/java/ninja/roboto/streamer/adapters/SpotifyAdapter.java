@@ -2,6 +2,7 @@ package ninja.roboto.streamer.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +37,14 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         viewHolder.mArtistName.setText(mArtists.get(position)[ARTIST_NAME_INDEX]);
-        Glide.with(mContext)
-                .load(mArtists.get(position)[ALBUM_ART_URL_INDEX])
-                .into(viewHolder.mAlbumArt);
+        String albumArtUrl = mArtists.get(position)[ALBUM_ART_URL_INDEX];
+        if (!TextUtils.isEmpty(albumArtUrl)) {
+            Glide.with(mContext)
+                    .load(albumArtUrl)
+                    .placeholder(R.drawable.vinyl)
+                    .error(R.drawable.vinyl)
+                    .into(viewHolder.mAlbumArt);
+        }
     }
 
     @Override
