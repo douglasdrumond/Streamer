@@ -4,8 +4,6 @@
              android:layout_height="match_parent"
              tools:context=".MainActivity">
 
-    <include layout="@layout/toolbar" />
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,6 +11,7 @@
         android:contentDescription="@string/content_description_headphones"
         android:src="@drawable/bg_headphone" />
 
+    <include layout="@layout/toolbar" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_search"
