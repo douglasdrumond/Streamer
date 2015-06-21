@@ -3,6 +3,7 @@ package ninja.roboto.streamer.adapters;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import ninja.roboto.streamer.model.SpotifyArtist;
 
 public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHolder> {
 
+    private static final String LOG_TAG = SpotifyAdapter.class.getSimpleName();
+
     private final Context mContext;
 
     private ArrayList<SpotifyArtist> mArtists;
@@ -30,7 +33,13 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.artist_item, viewGroup, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, new ViewHolder.ViewHolderClickListener() {
+            @Override
+            public void onArtistClick(String artistName) {
+                // TODO: 21/06/15 start activity for this artist
+                Log.d(LOG_TAG, "onArtistClick " + artistName);
+            }
+        });
     }
 
     @Override
@@ -56,14 +65,26 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private ViewHolderClickListener mListener;
         protected ImageView mAlbumArt;
         protected TextView mArtistName;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, ViewHolderClickListener listener) {
             super(itemView);
+            mListener = listener;
             mAlbumArt = (ImageView) itemView.findViewById(R.id.album_art);
             mArtistName = (TextView) itemView.findViewById(R.id.artist_name);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mListener.onArtistClick(mArtistName.getText().toString());
+        }
+
+        public interface ViewHolderClickListener {
+            void onArtistClick(String artistName);
         }
     }
 }
