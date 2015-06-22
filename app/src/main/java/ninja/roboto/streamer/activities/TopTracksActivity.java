@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -61,11 +62,14 @@ public class TopTracksActivity extends BaseActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String trackId = extras.getString(EXTRA_ARTIST_ID);
-            String trackName = extras.getString(EXTRA_ARTIST_NAME);
+            String artistName = extras.getString(EXTRA_ARTIST_NAME);
             String albumArtUrl = extras.getString(EXTRA_ARTIST_ALBUM_ART_URL);
             Glide.with(this).load(albumArtUrl).placeholder(R.drawable.vinyl).error(R.drawable.vinyl).into(toolbarImage);
+
+            //Workaround for https://code.google.com/p/android/issues/detail?id=175808
+            ((TextView)findViewById(R.id.toolbar_title)).setText(artistName);
             //noinspection ConstantConditions (we know it's not null)
-            getSupportActionBar().setTitle(trackName);
+            //getSupportActionBar().setTitle(artistName);
 
             if (savedInstanceState == null) {
                 searchTopTracks(trackId);
