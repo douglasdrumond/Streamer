@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +17,7 @@ import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.Image;
 import kaaes.spotify.webapi.android.models.Track;
 import kaaes.spotify.webapi.android.models.Tracks;
+import ninja.roboto.streamer.GlideConfiguration;
 import ninja.roboto.streamer.R;
 import ninja.roboto.streamer.adapters.TopTracksAdapter;
 import ninja.roboto.streamer.model.SpotifyTrack;
@@ -25,6 +29,8 @@ public class TopTracksActivity extends BaseActivity {
 
     public static final String EXTRA_ARTIST_ID = "EXTRA_ARTIST_ID";
     public static final String EXTRA_ARTIST_NAME = "EXTRA_ARTIST_NAME";
+    public static final String EXTRA_ARTIST_ALBUM_ART_URL = "EXTRA_ARTIST_ALBUM_ART_URL";
+
     private static final String LOG_TAG = TopTracksActivity.class.getSimpleName();
     private static final String TRACKS_SAVE_KEY = "TRACKS_SAVE_KEY";
 
@@ -47,6 +53,8 @@ public class TopTracksActivity extends BaseActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
+        ImageView toolbarImage = (ImageView) findViewById(R.id.toolbarImage);
+
         mAdapter = new TopTracksAdapter(this);
         recyclerView.setAdapter(mAdapter);
 
@@ -54,6 +62,8 @@ public class TopTracksActivity extends BaseActivity {
         if (extras != null) {
             String trackId = extras.getString(EXTRA_ARTIST_ID);
             String trackName = extras.getString(EXTRA_ARTIST_NAME);
+            String albumArtUrl = extras.getString(EXTRA_ARTIST_ALBUM_ART_URL);
+            Glide.with(this).load(albumArtUrl).placeholder(R.drawable.vinyl).error(R.drawable.vinyl).into(toolbarImage);
             //noinspection ConstantConditions (we know it's not null)
             getSupportActionBar().setTitle(trackName);
 

@@ -43,6 +43,7 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
                 Intent intent = new Intent(mContext, TopTracksActivity.class);
                 intent.putExtra(TopTracksActivity.EXTRA_ARTIST_ID, mArtists.get(position).getId());
                 intent.putExtra(TopTracksActivity.EXTRA_ARTIST_NAME, mArtists.get(position).getName());
+                intent.putExtra(TopTracksActivity.EXTRA_ARTIST_ALBUM_ART_URL, mArtists.get(position).getAlbumArtUrl());
                 mContext.startActivity(intent);
             }
         });
