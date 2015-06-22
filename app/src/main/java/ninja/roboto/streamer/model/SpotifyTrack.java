@@ -4,13 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-public class SpotifyArtist implements Parcelable {
-
+public class SpotifyTrack implements Parcelable {
     private String mId;
     private String mName;
     private String mAlbumArtUrl;
 
-    public SpotifyArtist(String id, String name, String albumArtUrl) {
+    public SpotifyTrack(String id, String name, String albumArtUrl) {
         mId = id;
         mName = name;
         mAlbumArtUrl = albumArtUrl;
@@ -28,7 +27,7 @@ public class SpotifyArtist implements Parcelable {
         return mAlbumArtUrl;
     }
 
-    protected SpotifyArtist(Parcel in) {
+    protected SpotifyTrack(Parcel in) {
         mId = in.readString();
         mName = in.readString();
         mAlbumArtUrl = in.readString();
@@ -46,15 +45,15 @@ public class SpotifyArtist implements Parcelable {
         dest.writeString(mAlbumArtUrl);
     }
 
-    public static final Parcelable.Creator<SpotifyArtist> CREATOR = new Parcelable.Creator<SpotifyArtist>() {
+    public static final Parcelable.Creator<SpotifyTrack> CREATOR = new Parcelable.Creator<SpotifyTrack>() {
         @Override
-        public SpotifyArtist createFromParcel(Parcel in) {
-            return new SpotifyArtist(in);
+        public SpotifyTrack createFromParcel(Parcel in) {
+            return new SpotifyTrack(in);
         }
 
         @Override
-        public SpotifyArtist[] newArray(int size) {
-            return new SpotifyArtist[size];
+        public SpotifyTrack[] newArray(int size) {
+            return new SpotifyTrack[size];
         }
     };
 }

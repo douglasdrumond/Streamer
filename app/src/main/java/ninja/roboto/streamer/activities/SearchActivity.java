@@ -32,7 +32,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends BaseActivity {
     private static final String LOG_TAG = SearchActivity.class.getSimpleName();
 
     private static final int TEXT_LENGTH_THRESHOLD = 3;
@@ -186,17 +186,14 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void failure(RetrofitError error) {
                 Log.d(LOG_TAG, "failure " + error.getMessage());
-                Toast.makeText(SearchActivity.this, R.string.artist_lookup_error, Toast.LENGTH_SHORT).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(SearchActivity.this, R.string.artist_lookup_error, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         });
-
     }
-
-    private void configureToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        //noinspection ConstantConditions (we know getSupportActionBar ≠ null)
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
 }
