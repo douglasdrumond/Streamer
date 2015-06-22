@@ -1,6 +1,7 @@
 package ninja.roboto.streamer.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import ninja.roboto.streamer.R;
+import ninja.roboto.streamer.activities.TopTracksActivity;
 import ninja.roboto.streamer.model.SpotifyArtist;
 
 public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHolder> {
@@ -38,6 +40,8 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
             public void onArtistClick(int position) {
                 // TODO: 21/06/15 start activity for this artist
                 Log.d(LOG_TAG, "onArtistClick " + mArtists.get(position).getName());
+                Intent intent = new Intent(mContext, TopTracksActivity.class);
+                mContext.startActivity(intent);
             }
         });
     }
