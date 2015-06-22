@@ -18,7 +18,6 @@ import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.Image;
 import kaaes.spotify.webapi.android.models.Track;
 import kaaes.spotify.webapi.android.models.Tracks;
-import ninja.roboto.streamer.GlideConfiguration;
 import ninja.roboto.streamer.R;
 import ninja.roboto.streamer.adapters.TopTracksAdapter;
 import ninja.roboto.streamer.model.SpotifyTrack;
