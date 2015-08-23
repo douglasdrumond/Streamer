@@ -1,4 +1,4 @@
-package ninja.roboto.streamer;
+package com.cafelinear.streamer;
 
 import android.content.Context;
 

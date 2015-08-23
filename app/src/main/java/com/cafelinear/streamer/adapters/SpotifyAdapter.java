@@ -1,4 +1,4 @@
-package ninja.roboto.streamer.adapters;
+package com.cafelinear.streamer.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,12 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.cafelinear.streamer.R;
+import com.cafelinear.streamer.activities.TopTracksActivity;
+import com.cafelinear.streamer.model.SpotifyArtist;
 
 import java.util.ArrayList;
-
-import ninja.roboto.streamer.R;
-import ninja.roboto.streamer.activities.TopTracksActivity;
-import ninja.roboto.streamer.model.SpotifyArtist;
 
 public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHolder> {
 

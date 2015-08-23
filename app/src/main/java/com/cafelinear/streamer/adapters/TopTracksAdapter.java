@@ -1,4 +1,4 @@
-package ninja.roboto.streamer.adapters;
+package com.cafelinear.streamer.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,11 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.cafelinear.streamer.R;
+import com.cafelinear.streamer.model.SpotifyTrack;
 
 import java.util.ArrayList;
 
-import ninja.roboto.streamer.R;
-import ninja.roboto.streamer.model.SpotifyTrack;
 
 public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.ViewHolder> {
     private static final String LOG_TAG = TopTracksAdapter.class.getSimpleName();

@@ -1,4 +1,4 @@
-package ninja.roboto.streamer.model;
+package com.cafelinear.streamer.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

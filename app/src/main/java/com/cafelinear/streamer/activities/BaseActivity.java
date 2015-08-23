@@ -1,9 +1,9 @@
-package ninja.roboto.streamer.activities;
+package com.cafelinear.streamer.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import ninja.roboto.streamer.R;
+import com.cafelinear.streamer.R;
 
 public class BaseActivity extends AppCompatActivity {
 

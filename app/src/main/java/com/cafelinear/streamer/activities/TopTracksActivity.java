@@ -1,4 +1,4 @@
-package ninja.roboto.streamer.activities;
+package com.cafelinear.streamer.activities;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,9 +18,11 @@ import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.Image;
 import kaaes.spotify.webapi.android.models.Track;
 import kaaes.spotify.webapi.android.models.Tracks;
-import ninja.roboto.streamer.R;
-import ninja.roboto.streamer.adapters.TopTracksAdapter;
-import ninja.roboto.streamer.model.SpotifyTrack;
+
+import com.cafelinear.streamer.R;
+import com.cafelinear.streamer.adapters.TopTracksAdapter;
+import com.cafelinear.streamer.model.SpotifyTrack;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -66,7 +68,7 @@ public class TopTracksActivity extends BaseActivity {
             Glide.with(this).load(albumArtUrl).placeholder(R.drawable.vinyl).error(R.drawable.vinyl).into(toolbarImage);
 
             //Workaround for https://code.google.com/p/android/issues/detail?id=175808
-            ((TextView)findViewById(R.id.toolbar_title)).setText(artistName);
+            ((TextView) findViewById(R.id.toolbar_title)).setText(artistName);
             //noinspection ConstantConditions (we know it's not null)
             //getSupportActionBar().setTitle(artistName);
 

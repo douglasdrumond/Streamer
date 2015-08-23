@@ -1,11 +1,9 @@
-package ninja.roboto.streamer.activities;
+package com.cafelinear.streamer.activities;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,6 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cafelinear.streamer.R;
+import com.cafelinear.streamer.adapters.SpotifyAdapter;
+import com.cafelinear.streamer.model.SpotifyArtist;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,9 +27,6 @@ import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.Artist;
 import kaaes.spotify.webapi.android.models.ArtistsPager;
 import kaaes.spotify.webapi.android.models.Image;
-import ninja.roboto.streamer.R;
-import ninja.roboto.streamer.adapters.SpotifyAdapter;
-import ninja.roboto.streamer.model.SpotifyArtist;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
