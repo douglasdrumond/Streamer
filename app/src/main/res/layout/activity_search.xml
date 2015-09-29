@@ -21,10 +21,9 @@
             android:windowSoftInputMode="stateHidden" />
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview_result"
+    <fragment
+        android:id="@+id/fragment_search_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical" />
-
+        android:name="com.cafelinear.streamer.fragments.SearchListFragment" />
 </LinearLayout>

@@ -1,7 +1,6 @@
 package com.cafelinear.streamer.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.cafelinear.streamer.R;
-import com.cafelinear.streamer.activities.TopTracksActivity;
 import com.cafelinear.streamer.model.SpotifyArtist;
 
 import java.util.ArrayList;
@@ -23,11 +21,13 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
     private static final String LOG_TAG = SpotifyAdapter.class.getSimpleName();
 
     private final Context mContext;
+    private final OnSpotifyClickListener mSpotifyClickListener;
 
     private ArrayList<SpotifyArtist> mArtists;
 
-    public SpotifyAdapter(Context context) {
+    public SpotifyAdapter(Context context, OnSpotifyClickListener spotifyClickListener) {
         mContext = context;
+        mSpotifyClickListener = spotifyClickListener;
     }
 
     @Override
@@ -38,13 +38,10 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
 
             @Override
             public void onArtistClick(int position) {
-                // TODO: 21/06/15 start activity for this artist
                 Log.d(LOG_TAG, "onArtistClick " + mArtists.get(position).getName());
-                Intent intent = new Intent(mContext, TopTracksActivity.class);
-                intent.putExtra(TopTracksActivity.EXTRA_ARTIST_ID, mArtists.get(position).getId());
-                intent.putExtra(TopTracksActivity.EXTRA_ARTIST_NAME, mArtists.get(position).getName());
-                intent.putExtra(TopTracksActivity.EXTRA_ARTIST_ALBUM_ART_URL, mArtists.get(position).getAlbumArtUrl());
-                mContext.startActivity(intent);
+                mSpotifyClickListener.onClick(mArtists.get(position).getId(),
+                        mArtists.get(position).getName(),
+                        mArtists.get(position).getAlbumArtUrl());
             }
         });
     }
@@ -95,5 +92,9 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
 
             void onArtistClick(int adapterPosition);
         }
+    }
+
+    public interface OnSpotifyClickListener {
+        void onClick(String id, String name, String albumArtUrl);
     }
 }
