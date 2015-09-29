@@ -32,6 +32,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class SearchActivity extends BaseActivity {
+
     private static final String LOG_TAG = SearchActivity.class.getSimpleName();
 
     private static final int TEXT_LENGTH_THRESHOLD = 3;
@@ -83,8 +84,8 @@ public class SearchActivity extends BaseActivity {
 
     private void configureEditText() {
         mSearchQuery = (EditText) findViewById(R.id.edittext_search_query);
-        mSearchQuery.addTextChangedListener(
-                new TextWatcher() {
+        mSearchQuery.addTextChangedListener(new TextWatcher() {
+
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                         // Unused method
@@ -109,31 +110,31 @@ public class SearchActivity extends BaseActivity {
 
                             mTimerToSend = new Timer();
                             mTimerToSend.schedule(new TimerTask() {
+
                                 @Override
                                 public void run() {
                                     runOnUiThread(new Runnable() {
+
                                         @Override
                                         public void run() {
                                             searchArtist(s.toString());
                                         }
                                     });
-
                                 }
-
                             }, DELAY_IN_MILLIS);
                         }
                     }
                 });
 
-        mSearchQuery.setOnEditorActionListener(
-                new TextView.OnEditorActionListener() {
+        mSearchQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
                     @Override
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                         if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
 
                             // Hide the keyboard
-                            InputMethodManager imm
-                                    = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            InputMethodManager imm =
+                                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(mSearchQuery.getWindowToken(), 0);
 
                             searchArtist(v.getText().toString());
@@ -142,8 +143,7 @@ public class SearchActivity extends BaseActivity {
 
                         return false;
                     }
-                }
-        );
+                });
     }
 
     // TODO: 21/06/15 move to a Service, now it has a potentially long call tied to an Activity
@@ -154,6 +154,7 @@ public class SearchActivity extends BaseActivity {
         SpotifyApi spotifyApi = new SpotifyApi();
         SpotifyService spotifyService = spotifyApi.getService();
         spotifyService.searchArtists(artistQueryString, new Callback<ArtistsPager>() {
+
             @Override
             public void success(ArtistsPager artistsPager, Response response) {
 
@@ -171,12 +172,14 @@ public class SearchActivity extends BaseActivity {
                 }
 
                 runOnUiThread(new Runnable() {
+
                     @Override
                     public void run() {
                         if (!mArtists.isEmpty()) {
                             mAdapter.setArtists(mArtists);
                         } else {
-                            Toast.makeText(SearchActivity.this, R.string.could_not_find_artist, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SearchActivity.this, R.string.could_not_find_artist, Toast.LENGTH_SHORT)
+                                    .show();
                         }
                     }
                 });
@@ -186,12 +189,12 @@ public class SearchActivity extends BaseActivity {
             public void failure(RetrofitError error) {
                 Log.d(LOG_TAG, "failure " + error.getMessage());
                 runOnUiThread(new Runnable() {
+
                     @Override
                     public void run() {
                         Toast.makeText(SearchActivity.this, R.string.artist_lookup_error, Toast.LENGTH_SHORT).show();
                     }
                 });
-
             }
         });
     }

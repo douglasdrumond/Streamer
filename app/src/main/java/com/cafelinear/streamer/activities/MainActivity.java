@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         findViewById(R.id.fab_search).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, SearchActivity.class));

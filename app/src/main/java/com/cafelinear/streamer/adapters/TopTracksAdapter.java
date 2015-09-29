@@ -15,8 +15,8 @@ import com.cafelinear.streamer.model.SpotifyTrack;
 
 import java.util.ArrayList;
 
-
 public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.ViewHolder> {
+
     private static final String LOG_TAG = TopTracksAdapter.class.getSimpleName();
     private ArrayList<SpotifyTrack> mTracks;
     private Context mContext;
@@ -30,6 +30,7 @@ public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.View
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.top_tracks_item, parent, false);
         return new ViewHolder(view, new ViewHolder.ViewHolderClickListener() {
+
             @Override
             public void onTrackClick(int position) {
                 // TODO: 21/06/15 start activity playing from this track
@@ -49,7 +50,6 @@ public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.View
                     .placeholder(R.drawable.vinyl)
                     .into(holder.mAlbumArt);
         }
-
     }
 
     @Override
@@ -63,6 +63,7 @@ public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.View
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         protected ImageView mAlbumArt;
         protected TextView mTrackName;
         private ViewHolderClickListener mListener;
@@ -81,6 +82,7 @@ public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.View
         }
 
         public interface ViewHolderClickListener {
+
             void onTrackClick(int adapterPosition);
         }
     }

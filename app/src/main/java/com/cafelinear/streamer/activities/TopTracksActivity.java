@@ -9,6 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.cafelinear.streamer.R;
+import com.cafelinear.streamer.adapters.TopTracksAdapter;
+import com.cafelinear.streamer.model.SpotifyTrack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,11 +21,6 @@ import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.Image;
 import kaaes.spotify.webapi.android.models.Track;
 import kaaes.spotify.webapi.android.models.Tracks;
-
-import com.cafelinear.streamer.R;
-import com.cafelinear.streamer.adapters.TopTracksAdapter;
-import com.cafelinear.streamer.model.SpotifyTrack;
-
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -98,6 +96,7 @@ public class TopTracksActivity extends BaseActivity {
         queryMap.put("country", "BR");
 
         spotifyService.getArtistTopTrack(artistId, queryMap, new Callback<Tracks>() {
+
             @Override
             public void success(Tracks tracks, Response response) {
                 int size = tracks.tracks.size();
@@ -113,6 +112,7 @@ public class TopTracksActivity extends BaseActivity {
                 }
 
                 runOnUiThread(new Runnable() {
+
                     @Override
                     public void run() {
                         if (!mTracks.isEmpty()) {
@@ -128,13 +128,13 @@ public class TopTracksActivity extends BaseActivity {
             public void failure(RetrofitError error) {
                 Log.d(LOG_TAG, "failure " + error.getMessage());
                 runOnUiThread(new Runnable() {
+
                     @Override
                     public void run() {
                         Toast.makeText(TopTracksActivity.this, R.string.top_tracks_lookup_error, Toast.LENGTH_SHORT)
                                 .show();
                     }
                 });
-
             }
         });
     }

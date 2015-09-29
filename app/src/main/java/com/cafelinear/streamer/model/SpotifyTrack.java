@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 public class SpotifyTrack implements Parcelable {
+
     private String mId;
     private String mName;
     private String mAlbumArtUrl;
@@ -46,6 +47,7 @@ public class SpotifyTrack implements Parcelable {
     }
 
     public static final Parcelable.Creator<SpotifyTrack> CREATOR = new Parcelable.Creator<SpotifyTrack>() {
+
         @Override
         public SpotifyTrack createFromParcel(Parcel in) {
             return new SpotifyTrack(in);

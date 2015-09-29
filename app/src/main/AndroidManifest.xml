@@ -23,8 +23,7 @@
             android:name=".activities.SearchActivity"
             android:label="@string/title_activity_search"
             android:parentActivityName=".activities.MainActivity" />
-        <activity
-            android:name=".activities.TopTracksActivity" />
+        <activity android:name=".activities.TopTracksActivity" />
 
         <meta-data
             android:name="com.cafelinear.streamer.GlideConfiguration"

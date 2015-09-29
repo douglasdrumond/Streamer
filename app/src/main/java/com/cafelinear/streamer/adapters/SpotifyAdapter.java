@@ -35,6 +35,7 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.artist_item, parent, false);
         return new ViewHolder(view, new ViewHolder.ViewHolderClickListener() {
+
             @Override
             public void onArtistClick(int position) {
                 // TODO: 21/06/15 start activity for this artist
@@ -72,6 +73,7 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         protected ImageView mAlbumArt;
         protected TextView mArtistName;
         private ViewHolderClickListener mListener;
@@ -90,6 +92,7 @@ public class SpotifyAdapter extends RecyclerView.Adapter<SpotifyAdapter.ViewHold
         }
 
         public interface ViewHolderClickListener {
+
             void onArtistClick(int adapterPosition);
         }
     }
